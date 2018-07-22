@@ -25,10 +25,39 @@ def scrape():
     # Scrape page into soup
     html = browser.html
     soup = BeautifulSoup(html, 'html.parser')
+    results = soup.find_all(class_='itemLink product-item')
 
 
     # Store in dictionary
-    weather = {}
+    hemisphere_image_urls =[]
+    # Loop through returned results
+    for result in results:
+        # Error handling
+        try:
+            title = result.find('h3').text
+            link = "http://astropedia.astrogeology.usgs.gov/download/"+ result['href'][12:]+'.tif/full.jpg'
+            if (title and link):
+                # Print results
+                print('-------------')
+                print(title)
+                print(link)
+
+                # Dictionary to be inserted as a MongoDB document
+                post = {
+                    "title": title,
+                    "img_url": link
+                }
+                hemisphere_image_urls.append(post)
+                
+
+                #collection.insert_one(post)
+
+        except Exception as e:
+            print(e)
+            
+    print(hemisphere_image_urls)
 
     # Return results
-    return weather
+    return hemisphere_image_urls 
+
+    
