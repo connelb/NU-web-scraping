@@ -1,7 +1,7 @@
 # import necessary libraries
 from flask import Flask, render_template, redirect
 from flask_pymongo import PyMongo
-import scrape_info
+import scrape_mars
 
 # create instance of Flask app
 app = Flask(__name__)
@@ -26,17 +26,14 @@ def home():
 def scrape():
 
     # Run scraped functions
-    weather = scrape_info.scrape_weather()
-    surf = scrape_info.scrape_surf()
+    weather = scrape_mars.scrape()
 
     # Store results into a dictionary
     forecast = {
         "time": weather["time"],
         "location": weather["name"],
         "min_temp": weather["min_temp"],
-        "max_temp": weather["max_temp"],
-        "surf_location": surf["location"],
-        "height": surf["height"]
+        "max_temp": weather["max_temp"]
     }
 
     # Insert forecast into database
