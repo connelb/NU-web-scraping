@@ -55,9 +55,9 @@ def scrape():
         except Exception as e:
             print(e)
             
-    print(hemisphere_image_urls)
+    print('this is the hemisphere:', hemisphere_image_urls)
 
     # Return results
-    return hemisphere_image_urls 
+    return hemisphere_image_urls
 
     
